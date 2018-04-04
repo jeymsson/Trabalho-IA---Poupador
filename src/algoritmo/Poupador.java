@@ -128,23 +128,34 @@ public class Poupador extends ProgramaPoupador {
 			}
 		}
 		//criando novo array de pos
-		int[] novo = new int[novoTam];
+		int[] novoLivre = new int[novoTam];
+		int[] novoCheiro = new int[novoTam];
 		int cont = 0;
 		System.out.print("");
 		for (int i = 0; i < livres.length; i++) {
 			if(cheiro[i] != -1) {
-				novo[cont] = livres[i];
+				novoLivre[cont]  = livres[i];
+				novoCheiro[cont] = cheiro[i];
 				cont++;
 			}
 		}
 		int sorte = sorteio(novoTam);
-		melhorDirecao = novo[sorte-1];
+		melhorDirecao = novoLivre[sorte-1];
 		System.out.print("");
-//		if(!sorte()) {
-//			melhorDirecao = sorteio(livres.length);
-//		}
 
+		// melhorDirecao = melhorDirecao != -1 ?melhorDirecao:0;
+		melhorDirecao = escolheMehorLivre(novoLivre, novoCheiro);
+		return melhorDirecao;
+	}
+	
+	private int escolheMehorLivre(int[] novoLivre, int[] novoCheiro) {
+		// TODO Auto-generated method stub
+		int tamanho = novoLivre.length;
+		int sorte = sorteio(tamanho);
+		
+		int melhorDirecao = novoLivre[sorte-1];
 		melhorDirecao = melhorDirecao != -1 ?melhorDirecao:0;
+		
 		return melhorDirecao;
 	}
 	
