@@ -68,15 +68,20 @@ public class Poupador extends ProgramaPoupador {
 	
 	private int melhorPosicao() {
 		// TODO Auto-generated method stub
-		int ret = sorteio(4);
-		
 		int[] livres = retornaLivres();
-		f.dump(livres);
+		int menorPeso = 0;
 		
-		int menorPeso = retornaMenorPeso(livres);
-		f.dump(menorPeso);
+		if (livres.length > 0) {
+			f.dump(livres, "retornaLivres: ");
+			System.out.print("");
+			
+			menorPeso = retornaMenorPeso(livres);
+			
+			f.dump("retornaMenorPeso: " + menorPeso);
+			System.out.print("");
+		}
 		
-		System.out.println("-");
+		System.out.println("-- Fim Calculo --");
 		
 		
 		
@@ -90,6 +95,7 @@ public class Poupador extends ProgramaPoupador {
 	
 	
 	private int retornaMenorPeso(int[] livres) {
+		int[] cheiro = new int[livres.length];
 		// TODO Auto-generated method stub
 		int menor	= 9999,
 			atual	= 9999,
@@ -97,17 +103,48 @@ public class Poupador extends ProgramaPoupador {
 			melhorDirecao	= 9999;
 		int[] olfato = sensor.getAmbienteOlfatoPoupador();
 		
+		//Capturando cheiro
 		for (int i = 0; i < livres.length; i++) {
 			dirTemp = Direcao(livres[i], 7); // Direção para olfatos.
 			atual = olfato[dirTemp]; // Captura olfato da direção.
-			if(atual < menor){ //Captura menor olfato
-				menor = atual;
-				melhorDirecao = livres[i];
+			cheiro[i] = atual; // Capturando cheiro
+		}
+		int novoTam = livres.length;
+		System.out.print("");
+		//verificando menor cheiro
+		for (int i = 0; i < livres.length; i++) {
+			if(i == 0) {
+				menor = cheiro[i];
+			} else if (cheiro[i] <= menor) {
+				menor = cheiro[i];
+				
+				if(cheiro[i-1] > menor && cheiro[i-1] != -1) {
+					cheiro[i-1] = -1;
+				}
+			} else {
+				cheiro[i] = -1;
+				livres[i] = -1;
+				novoTam--;
 			}
 		}
+		//criando novo array de pos
+		int[] novo = new int[novoTam];
+		int cont = 0;
+		System.out.print("");
+		for (int i = 0; i < livres.length; i++) {
+			if(cheiro[i] != -1) {
+				novo[cont] = livres[i];
+				cont++;
+			}
+		}
+		int sorte = sorteio(novoTam);
+		melhorDirecao = novo[sorte-1];
+		System.out.print("");
 //		if(!sorte()) {
 //			melhorDirecao = sorteio(livres.length);
 //		}
+
+		melhorDirecao = melhorDirecao != -1 ?melhorDirecao:0;
 		return melhorDirecao;
 	}
 	
