@@ -20,7 +20,7 @@ public class Poupador extends ProgramaPoupador {
 		, cheirando = 3
 		, cheiroForte = 2
 		, cheiroMuitoForte = 1;
-	Funcoes f = new Funcoes();
+	// Funcoes f = new Funcoes();
 	int esq	= 4,
 		dir	= 3,
 		cim	= 1,
@@ -77,16 +77,14 @@ public class Poupador extends ProgramaPoupador {
 		int menorPeso = 0;
 		
 		if (livres.length > 0) {
-			f.dump(livres, "retornaLivres: ");
-			System.out.print("");
+			dump(livres, "retornaLivres: ");
 			
 			menorPeso = retornaMenorPeso(livres);
 			
-			f.dump("retornaMenorPeso: " + menorPeso);
-			System.out.print("");
+			dump("retornaMenorPeso: " + menorPeso);
 		}
 		
-		System.out.println("-- Fim Calculo --");
+		dump("-- Fim Calculo --");
 		
 		
 		
@@ -117,7 +115,7 @@ public class Poupador extends ProgramaPoupador {
 		}
 		//verificando menor cheiro
 		int novoTam = livres.length;
-		System.out.print("");
+		dump("");
 		for (int i = 0; i < livres.length; i++) {
 			if(i == 0) {
 				menor = cheiro[i];
@@ -137,7 +135,7 @@ public class Poupador extends ProgramaPoupador {
 		int[] novoLivre = new int[novoTam];
 		int[] novoCheiro = new int[novoTam];
 		int cont = 0;
-		System.out.print("");
+		dump("");
 		for (int i = 0; i < livres.length; i++) {
 			if(cheiro[i] != -1) {
 				novoLivre[cont]  = livres[i];
@@ -147,7 +145,7 @@ public class Poupador extends ProgramaPoupador {
 		}
 		int sorte = sorteio(novoTam);
 		melhorDirecao = novoLivre[sorte-1];
-		System.out.print("");
+		dump("");
 
 		// melhorDirecao = melhorDirecao != -1 ?melhorDirecao:0;
 		melhorDirecao = escolheMehorLivre(novoLivre, novoCheiro);
@@ -174,8 +172,8 @@ public class Poupador extends ProgramaPoupador {
 		this.mundo[posAtl.y][posAtl.x] = this.mundo[posAtl.y][posAtl.x]+1;
 		
 		if(this.sout == 0) {
-			f.dump(this.mundo);
-			System.out.println("__________________");
+			dump(this.mundo);
+			dump("__________________");
 			this.sout++;
 		} else {this.sout--;}
 	}
@@ -234,33 +232,61 @@ public class Poupador extends ProgramaPoupador {
 			v.add(dir);
 		}
 		
-		return f.intVector2intArr(v);
+		return intVector2intArr(v);
 	}
 	// Informa se a posição está livre
 	public boolean posLivre(int pos) {
 		boolean sucesso = false;
 		int valor = sensor.getVisaoIdentificacao()[pos];
 		if(pos>23 || pos<0){
-			imprime("'.posLivre': Posição inválida.");
+			dump("'.posLivre': Posição inválida.");
 			sucesso = false;
 		} else {
 
 			if (valor == semVisao || valor == foraAmbiente || valor == parede || valor >= 200) {
-				imprime("'.posLivre': Valores invalidos");
+				dump("'.posLivre': Valores invalidos");
 				sucesso = false;
 			}
 			else if(valor == vazio || valor == banco || valor == moeda || valor == pastilha){
-				imprime("'.posLivre': Posição livre.");
+				dump("'.posLivre': Posição livre.");
 				sucesso = true;
 			}
 		}
 		return sucesso;
 	}
+	
+	// ---- Funcoes
 	// Imprime se logs Ativo.
-	public void imprime(String mensagem) {
+	public <G> void dump(G value){
 		if(getLogs()) {
-			System.out.println(mensagem);
+			System.err.println(value);
 		}
+	}
+	public void dump(int[] value, String s){
+		if(getLogs()) {
+			System.err.println(s);
+			for (int g : value) {
+				System.out.println(g);
+			}
+		}
+	}
+	public void dump(int[][] value){
+		if(getLogs()) {
+			for (int[] g1 : value) {
+				for (int g2 : g1) {
+					System.out.print(g2 + "  ");
+				}
+				System.out.println();
+			}
+		}
+	}
+	public int[] intVector2intArr(Vector<Integer> vector) {
+		int[] a = new int[vector.size()];
+		for (int i = 0; i < vector.size(); i++) {
+			a[i] = vector.elementAt(i);
+		}
+		
+		return a;
 	}
 	
 }
