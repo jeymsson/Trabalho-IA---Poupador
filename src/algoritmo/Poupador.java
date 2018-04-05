@@ -1,9 +1,11 @@
 package algoritmo;
 
+import java.awt.Point;
 import java.util.Vector;
 
 public class Poupador extends ProgramaPoupador {
 	
+	int sout = 0;
 	boolean Logs = false;
 	int semVisao = -2,
 		foraAmbiente = -1,
@@ -28,7 +30,10 @@ public class Poupador extends ProgramaPoupador {
 		, direitaVisao	= 12
 		, cimaVisao		= 7
 		, baixoVisao	= 16;
-
+	
+	// Lembrança do mundo
+	int[][] mundo = new int[30][30];
+	
 //		sensor.getAmbienteOlfatoLadrao();
 //		sensor.getAmbienteOlfatoPoupador();
 //		sensor.getNumeroDeMoedas();
@@ -93,7 +98,8 @@ public class Poupador extends ProgramaPoupador {
 	}
 	
 	
-	
+	// Funçao para receber decidir quais são os movimentos 
+	// de menor peso a partir dos lados andáveis.
 	private int retornaMenorPeso(int[] livres) {
 		int[] cheiro = new int[livres.length];
 		// TODO Auto-generated method stub
@@ -109,9 +115,9 @@ public class Poupador extends ProgramaPoupador {
 			atual = olfato[dirTemp]; // Captura olfato da direção.
 			cheiro[i] = atual; // Capturando cheiro
 		}
+		//verificando menor cheiro
 		int novoTam = livres.length;
 		System.out.print("");
-		//verificando menor cheiro
 		for (int i = 0; i < livres.length; i++) {
 			if(i == 0) {
 				menor = cheiro[i];
@@ -148,6 +154,7 @@ public class Poupador extends ProgramaPoupador {
 		return melhorDirecao;
 	}
 	
+	// Função para decidir para onde vai o agente
 	private int escolheMehorLivre(int[] novoLivre, int[] novoCheiro) {
 		// TODO Auto-generated method stub
 		int tamanho = novoLivre.length;
@@ -156,9 +163,22 @@ public class Poupador extends ProgramaPoupador {
 		int melhorDirecao = novoLivre[sorte-1];
 		melhorDirecao = melhorDirecao != -1 ?melhorDirecao:0;
 		
+		SetaLembranca();
 		return melhorDirecao;
 	}
 	
+	// Função para setar as lembranças de onde andou
+	private void SetaLembranca() {
+		
+		Point posAtl = sensor.getPosicao();
+		this.mundo[posAtl.y][posAtl.x] = this.mundo[posAtl.y][posAtl.x]+1;
+		
+		if(this.sout == 0) {
+			f.dump(this.mundo);
+			System.out.println("__________________");
+			this.sout++;
+		} else {this.sout--;}
+	}
 	// Retorna as direções.
 	public int Direcao(int direcao, int tipo) {
 		int ret = -1;
