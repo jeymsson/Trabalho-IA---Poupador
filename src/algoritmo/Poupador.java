@@ -5,9 +5,9 @@ import java.util.Vector;
 
 public class Poupador extends ProgramaPoupador {
 	
-	int sout = 0;
-	boolean Logs = false;
-	int semVisao = -2,
+	private int sout = 0;
+	private boolean Logs = false;
+	private int semVisao = -2,
 		foraAmbiente = -1,
 		vazio = 0,
 		parede = 1,
@@ -21,7 +21,7 @@ public class Poupador extends ProgramaPoupador {
 		, cheiroForte = 2
 		, cheiroMuitoForte = 1;
 	// Funcoes f = new Funcoes();
-	int esq	= 4,
+	private int esq	= 4,
 		dir	= 3,
 		cim	= 1,
 		bai	= 2,
@@ -32,7 +32,7 @@ public class Poupador extends ProgramaPoupador {
 		, baixoVisao	= 16;
 	
 	// Lembrança do mundo
-	int[][] mundo = new int[30][30];
+	private int[][] mundo = new int[30][30];
 	
 //		sensor.getAmbienteOlfatoLadrao();
 //		sensor.getAmbienteOlfatoPoupador();
@@ -46,10 +46,10 @@ public class Poupador extends ProgramaPoupador {
 		// TODO Auto-generated method stub
 		return this.Logs;
 	}
-	public int sorteio(int number) {
+	private int sorteio(int number) {
 		return (int) (Math.random() * number+1);
 	}
-	public boolean sorte() {
+	private boolean sorte() {
 		boolean ret = false;
 		int resp = (int) (Math.random() * 1);
 		if(resp == 1) {
@@ -175,7 +175,7 @@ public class Poupador extends ProgramaPoupador {
 		} else {this.sout--;}
 	}
 	// Retorna as direções.
-	public int Direcao(int direcao, int tipo) {
+	private int Direcao(int direcao, int tipo) {
 		int ret = -1;
 		if(tipo == 23) {
 			if(direcao == cim)
@@ -232,7 +232,7 @@ public class Poupador extends ProgramaPoupador {
 		return intVector2intArr(v);
 	}
 	// Informa se a posição está livre
-	public boolean posLivre(int pos) {
+	private boolean posLivre(int pos) {
 		boolean sucesso = false;
 		int valor = sensor.getVisaoIdentificacao()[pos];
 		if(pos>23 || pos<0){
@@ -254,12 +254,12 @@ public class Poupador extends ProgramaPoupador {
 	
 	// ---- Funcoes
 	// Imprime se logs Ativo.
-	public <G> void dump(G value){
+	private <G> void dump(G value){
 		if(getLogs()) {
 			System.err.println(value);
 		}
 	}
-	public void dump(int[] value, String s){
+	private void dump(int[] value, String s){
 		if(getLogs()) {
 			System.err.println(s);
 			for (int g : value) {
@@ -267,7 +267,7 @@ public class Poupador extends ProgramaPoupador {
 			}
 		}
 	}
-	public void dump(int[][] value){
+	private void dump(int[][] value){
 		if(getLogs()) {
 			for (int[] g1 : value) {
 				for (int g2 : g1) {
@@ -277,7 +277,7 @@ public class Poupador extends ProgramaPoupador {
 			}
 		}
 	}
-	public int[] intVector2intArr(Vector<Integer> vector) {
+	private int[] intVector2intArr(Vector<Integer> vector) {
 		int[] a = new int[vector.size()];
 		for (int i = 0; i < vector.size(); i++) {
 			a[i] = vector.elementAt(i);
