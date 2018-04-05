@@ -143,9 +143,6 @@ public class Poupador extends ProgramaPoupador {
 				cont++;
 			}
 		}
-		int sorte = sorteio(novoTam);
-		melhorDirecao = novoLivre[sorte-1];
-		dump("");
 
 		// melhorDirecao = melhorDirecao != -1 ?melhorDirecao:0;
 		melhorDirecao = escolheMehorLivre(novoLivre, novoCheiro);
