@@ -245,7 +245,7 @@ public class Poupador extends ProgramaPoupador {
 			sucesso = false;
 		} else {
 
-			if (valor == semVisao || valor == foraAmbiente || valor == parede) {
+			if (valor == semVisao || valor == foraAmbiente || valor == parede || valor >= 200) {
 				imprime("'.posLivre': Valores invalidos");
 				sucesso = false;
 			}
